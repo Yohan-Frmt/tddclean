@@ -1,3 +1,14 @@
+ifneq (,$(findstring feature-,$(BRANCH)))
+	TEMP_NAME=$(subst $(findstring feature-,$(BRANCH)),feature/,$(BRANCH))
+else
+	TEMP_NAME=$(BRANCH)
+endif
+ifneq (,$(findstring release-,$(TEMP_NAME)))
+	BRANCH_NAME=$(subst $(findstring release-,$(TEMP_NAME)),release/,$(TEMP_NAME))
+else
+	BRANCH_NAME=$(TEMP_NAME)
+endif
+
 functional-tests:
 	php bin/console doctrine:fixtures:load -n --env=test
 	php bin/phpunit --testsuite functional --testdox
@@ -32,7 +43,7 @@ prepare-build:
 	npm run dev
 
 .PHONY: vendor
-analyze-windows:
+analyze:
 	npm audit --production
 	npx eslint assets/
 	npx stylelint "assets/styles/**/*.scss"
@@ -47,3 +58,17 @@ analyze-windows:
 	vendor\bin\phpcpd --exclude src/Controller/Admin/ src/
 	vendor\bin\phpmd src/ text .phpmd.xml
 	php vendor/bin/phpstan analyse -c phpstan.neon -l 7
+
+.PHONY: tests
+tests:
+	php bin/phpunit --testdox
+
+
+install:
+	cp .env.dist .env.local
+	sed -i -e 's/BRANCH/$(BRANCH)/' .env.local
+	sed -i -e 's/USER/$(DATABASE_USER)/' .env.local
+	sed -i -e 's/PASSWORD/$(DATABASE_PASSWORD)/' .env.local
+	composer install
+	npm install
+.PHONY: install
