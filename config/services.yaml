@@ -9,8 +9,8 @@ services:
     resource: '../src/Infrastructure'
     exclude: '../src/Infrastructure/{Test}'
 
-  App\UserInterface\:
-    resource: '../src/UserInterface'
+#  App\UserInterface\:
+#    resource: '../src/UserInterface'
 #
 #  App\UserInterface\Controller\:
 #    resource: '../src/UserInterface/Controller'
