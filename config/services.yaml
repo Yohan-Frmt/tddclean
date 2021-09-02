@@ -5,10 +5,18 @@ services:
         autowire: true
         autoconfigure: true
 
-    App\:
-        resource: '../src/'
+    App\Infrastructure\:
+        resource: '../src/Infrastructure'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+            - '../src/Infrastructure/Adapter'
+            - '../src/Infrastructure/{Test}'
+
+    App\UserInterface\:
+        resource: '../src/UserInterface'
+
+    App\UserInterface\Controller\:
+        resource: '../src/UserInterface/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Domain\:
+        resource: '../Domain/src'
