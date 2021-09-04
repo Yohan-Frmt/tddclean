@@ -76,7 +76,7 @@ class MakeUseCase extends AbstractMaker
 
         $generator->generateFile(
             targetPath: $domain . '/UseCase/' . $useCaseClassName->getShortName() . '.php',
-            templateName: __DIR__ . '/../Resources/template/use_case.template.php',
+            templateName: __DIR__ . '/../Resources/template/use_case.tpl.php',
             variables: [
                 'namespace' => 'Domain\\' . $domainArg . '\\UseCase',
                 'className' => $useCaseClassName->getShortName(),
@@ -88,7 +88,7 @@ class MakeUseCase extends AbstractMaker
 
         $generator->generateFile(
             targetPath: $domain . '/Request/' . $requestClassName->getShortName() . '.php',
-            templateName: __DIR__ . '/../Resources/template/request.template.php',
+            templateName: __DIR__ . '/../Resources/template/request.tpl.php',
             variables: [
                 'namespace' => 'Domain\\' . $domainArg . '\\Request',
                 'className' => $requestClassName->getShortName(),
@@ -97,7 +97,7 @@ class MakeUseCase extends AbstractMaker
 
         $generator->generateFile(
             targetPath: $domain . '/Response/' . $responseClassName->getShortName() . '.php',
-            templateName: __DIR__ . '/../Resources/template/response.template.php',
+            templateName: __DIR__ . '/../Resources/template/response.tpl.php',
             variables: [
                 'namespace' => 'Domain\\' . $domainArg . '\\Response',
                 'className' => $responseClassName->getShortName(),
@@ -106,7 +106,7 @@ class MakeUseCase extends AbstractMaker
 
         $generator->generateFile(
             targetPath: $domain . '/Presenter/' . $presenterInterfaceName->getShortName() . '.php',
-            templateName: __DIR__ . '/../Resources/template/presenter.template.php',
+            templateName: __DIR__ . '/../Resources/template/presenter.tpl.php',
             variables: [
                 'namespace' => 'Domain\\' . $domainArg . '\\Presenter',
                 'className' => $presenterInterfaceName->getShortName(),
@@ -116,7 +116,7 @@ class MakeUseCase extends AbstractMaker
 
         $generator->generateFile(
             targetPath: $domainTest . '/' . $testClassName->getShortName() . '.php',
-            templateName: __DIR__ . '/../Resources/template/test.template.php',
+            templateName: __DIR__ . '/../Resources/template/test.tpl.php',
             variables: [
                 'namespace' => 'Domain\\Tests\\' . $domainArg,
                 'className' => $testClassName->getShortName(),
