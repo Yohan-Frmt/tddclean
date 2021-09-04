@@ -4,8 +4,8 @@ namespace Domain\Security\Entity;
 
 use DateTimeInterface;
 use Domain\Security\Request\RegistrationRequest;
-
 use Symfony\Component\Uid\UuidV4;
+
 use function password_hash;
 
 use const PASSWORD_ARGON2I;
