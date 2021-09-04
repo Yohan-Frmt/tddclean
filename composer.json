@@ -83,13 +83,13 @@
   "autoload": {
     "psr-4": {
       "App\\": "src/",
-      "Domain\\": "Domain/src"
+      "Domain\\": "Domain/src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "App\\Tests\\": "tests/",
-      "Domain\\Tests\\": "Domain/tests"
+      "Domain\\Tests\\": "Domain/tests/"
     }
   },
   "replace": {
