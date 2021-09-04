@@ -6,7 +6,7 @@ use Domain\Security\Entity\User;
 use Domain\Security\Gateway\UserGateway;
 use Domain\Security\Request\RegistrationRequest;
 use Domain\Security\Response\RegistrationResponse;
-use Domain\Security\Presenter\RegistrationPresenter;
+use Domain\Security\Presenter\RegistrationPresenterInterface;
 
 class Registration
 {
@@ -14,7 +14,7 @@ class Registration
     {
     }
 
-    public function execute(RegistrationRequest $request, RegistrationPresenter $presenter): void
+    public function execute(RegistrationRequest $request, RegistrationPresenterInterface $presenter): void
     {
         $request->validate($this->user_gateway);
         $user = User::create($request);
