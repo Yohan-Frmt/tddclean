@@ -4,7 +4,7 @@ namespace Domain\Tests\Security;
 
 use Assert\AssertionFailedException;
 use Domain\Security\Entity\User;
-use Domain\Security\Presenter\RegistrationPresenter;
+use Domain\Security\Presenter\RegistrationPresenterInterface;
 use Domain\Security\Request\RegistrationRequest;
 use Domain\Security\Response\RegistrationResponse;
 use Domain\Security\UseCase\Registration;
@@ -17,11 +17,11 @@ use function password_verify;
 class RegistrationTest extends TestCase
 {
     private Registration $useCase;
-    private RegistrationPresenter $presenter;
+    private RegistrationPresenterInterface $presenter;
 
     protected function setUp(): void
     {
-        $this->presenter = new class () implements RegistrationPresenter
+        $this->presenter = new class () implements RegistrationPresenterInterface
         {
             public RegistrationResponse $response;
 
