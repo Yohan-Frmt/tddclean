@@ -2,19 +2,23 @@
 
 namespace Domain\Security\UseCase;
 
+use Domain\Security\Entity\User;
+use Domain\Security\Gateway\UserGateway;
 use Domain\Security\Request\RegistrationRequest;
 use Domain\Security\Response\RegistrationResponse;
 use Domain\Security\Presenter\RegistrationPresenter;
 
-
 class Registration
 {
-    /**
-    * @param RegistrationRequest $request
-    * @param RegistrationPresenter $presenter
-    */
-    public function execute(RegistrationRequest $request, RegistrationPresenter $presenter)
+    public function __construct(private UserGateway $user_gateway)
     {
-        $presenter->present(new RegistrationResponse());
+    }
+
+    public function execute(RegistrationRequest $request, RegistrationPresenter $presenter): void
+    {
+        $request->validate($this->user_gateway);
+        $user = User::create($request);
+        $this->user_gateway->register($user);
+        $presenter->present(new RegistrationResponse($user));
     }
 }
