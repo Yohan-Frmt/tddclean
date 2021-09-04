@@ -9,12 +9,12 @@ services:
     resource: '../src/Infrastructure'
     exclude: '../src/Infrastructure/{Test}'
 
-#  App\UserInterface\:
-#    resource: '../src/UserInterface'
-#
-#  App\UserInterface\Controller\:
-#    resource: '../src/UserInterface/Controller'
-#    tags: ['controller.service_arguments']
+  App\UserInterface\:
+    resource: '../src/UserInterface'
+
+  App\UserInterface\Controller\:
+    resource: '../src/UserInterface/Controller'
+    tags: ['controller.service_arguments']
 
   Domain\:
     resource: '../Domain/src'
