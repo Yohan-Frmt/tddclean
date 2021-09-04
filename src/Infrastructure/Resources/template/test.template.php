@@ -1,33 +1,33 @@
-<?= "<?php\n" ?>
+<?php echo "<?php\n" ?>
 
-namespace <?= $namespace; ?>;
+namespace <?php echo $namespace; ?>;
 
-use <?= $presenterNamespace ?>;
-use <?= $requestNamespace ?>;
-use <?= $responseNamespace ?>;
-use <?= $useCaseNamespace ?>;
+use <?php echo $presenterNamespace ?>;
+use <?php echo $requestNamespace ?>;
+use <?php echo $responseNamespace ?>;
+use <?php echo $useCaseNamespace ?>;
 use PHPUnit\Framework\TestCase;
 
-class <?= $className; ?> extends TestCase
+class <?php echo $className; ?> extends TestCase
 {
     public function test(): void
     {
-        $request = new <?= $requestClassName; ?>();
+        $request = new <?php echo $requestClassName; ?>();
 
-        $presenter = new class() implements <?= $presenterInterfaceName; ?>
+        $presenter = new class () implements <?php echo $presenterInterfaceName; ?>
         {
-            public <?= $responseClassName ?> $response;
+            public <?php echo $responseClassName ?> $response;
 
-            public function present(<?= $responseClassName ?> $response): void
+            public function present(<?php echo $responseClassName ?> $response): void
             {
                 $this->response = $response;
             }
         };
 
-        $useCase = new <?= $useCaseClassName; ?>();
+        $useCase = new <?php echo $useCaseClassName; ?>();
 
         $useCase->execute($request, $presenter);
 
-        $this->assertInstanceOf(<?= $responseClassName ?>::class, $presenter->response);
+        $this->assertInstanceOf(<?php echo $responseClassName ?>::class, $presenter->response);
     }
 }

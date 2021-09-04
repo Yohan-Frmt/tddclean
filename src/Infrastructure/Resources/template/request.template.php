@@ -1,8 +1,8 @@
-<?= "<?php\n" ?>
+<?php echo "<?php\n" ?>
 
-namespace <?= $namespace; ?>;
+namespace <?php echo $namespace; ?>;
 
-class <?= $className; ?><?= "\n" ?>
+class <?php echo $className; ?><?php echo "\n" ?>
 {
 
 }
