@@ -28,6 +28,4 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Domain Tests
-        run: php bin/phpunit Domain --testsuite unit,integration --coverage-text
-      - name: Tests
-        run: php bin/phpunit tests --testsuite unit,integration --coverage-text
+        run: php bin/phpunit --testsuite unit --coverage-text
