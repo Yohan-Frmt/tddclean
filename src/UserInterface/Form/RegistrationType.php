@@ -2,6 +2,8 @@
 
 namespace App\UserInterface\Form;
 
+use App\Infrastructure\Validator\UniqueEmail;
+use App\Infrastructure\Validator\UniqueUsername;
 use App\UserInterface\DataTransferObject\RegistrationDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,12 +26,14 @@ class RegistrationType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
+                    new UniqueEmail()
                 ],
             ])
             ->add(child: 'username', type: TextType::class, options: [
                 'label' => 'Username',
                 'constraints' => [
                     new NotBlank(),
+                    new UniqueUsername(),
                 ],
             ])
             ->add(child: 'plainPassword', type: RepeatedType::class, options: [
@@ -40,7 +44,7 @@ class RegistrationType extends AbstractType
                 'second_options' => [
                     'label' => 'Confirm Password',
                 ],
-                'invalid_message' => 'Confirmation does not match password ',
+                'invalid_message' => 'Confirmation does not match password!',
                 'constraints' => [
                     new NotBlank(),
                     new Length([

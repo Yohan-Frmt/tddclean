@@ -14,14 +14,20 @@ class Assert extends Assertion
     public static function uniqueEmail(string $email, UserGateway $user_gateway): void
     {
         if (!$user_gateway->isEmailUnique($email)) {
-            throw new NonUniqueEntry("Email is already used!", self::NON_UNIQUE_EMAIL);
+            throw new NonUniqueEntry(
+                message: "Email is already used!",
+                code: self::NON_UNIQUE_EMAIL
+            );
         }
     }
 
     public static function uniqueUsername(string $username, UserGateway $user_gateway): void
     {
         if (!$user_gateway->isUsernameUnique($username)) {
-            throw new NonUniqueEntry("Username is already used!", self::NON_UNIQUE_USERNAME);
+            throw new NonUniqueEntry(
+                message: "Username is already used!",
+                code: self::NON_UNIQUE_USERNAME
+            );
         }
     }
 }

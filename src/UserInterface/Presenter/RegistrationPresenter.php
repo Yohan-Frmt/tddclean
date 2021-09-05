@@ -7,7 +7,6 @@ use Domain\Security\Response\RegistrationResponse;
 
 class RegistrationPresenter implements RegistrationPresenterInterface
 {
-
     public function present(RegistrationResponse $response): void
     {
         // TODO: Implement present() method.
