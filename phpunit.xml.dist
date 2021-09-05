@@ -21,6 +21,12 @@
         <testsuite name="unit">
             <directory>Domain/tests</directory>
         </testsuite>
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
+        <testsuite name="e2e">
+            <directory>tests/E2E</directory>
+        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">

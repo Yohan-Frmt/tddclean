@@ -2,26 +2,11 @@
 
 namespace Domain\Tests\Adapter;
 
-use DateTimeImmutable;
 use Domain\Security\Entity\User;
 use Domain\Security\Gateway\UserGateway;
-use Symfony\Component\Uid\Uuid;
 
 class UserRepository implements UserGateway
 {
-    public function getUserByEmail(string $email): ?User
-    {
-        return $email !== "duplicate@mail.com" ? null : new User(
-            id: Uuid::v4(),
-            email: "duplicate@mail.com",
-            username: "username",
-            password: password_hash(password: 'password', algo: PASSWORD_ARGON2I),
-            passwordResetToken: 'bb4b5730-6057-4fa1-a27b-692b9ba8c14a',
-            passwordResetRequestedAt: new DateTimeImmutable(),
-            lastLogin: new DateTimeImmutable()
-        );
-    }
-
     public function isEmailUnique(?string $email): bool
     {
         return $email != "duplicate@mail.com";
@@ -32,11 +17,19 @@ class UserRepository implements UserGateway
         return $username != "duplicate";
     }
 
+    public function getUserByEmail(string $email): ?User
+    {
+        // TODO: Implement getUserByEmail() method.
+        return null;
+    }
+
     public function register(User $user): void
     {
+        // TODO: Implement register() method.
     }
 
     public function update(User $user): void
     {
+        // TODO: Implement update() method.
     }
 }

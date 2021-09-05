@@ -59,10 +59,24 @@ analyze:
 	vendor\bin\phpmd src/ text .phpmd.xml
 	php vendor/bin/phpstan analyse -c phpstan.neon -l 7
 
+unit-tests:
+	php bin/phpunit --testsuite unit --testdox
+
+integration-tests:
+	php bin/phpunit --testsuite unit --testdox
+
+system-tests:
+	composer database-test
+	php bin/phpunit --testsuite unit --testdox
+
+e2e-tests:
+	composer database-panther
+	php bin/phpunit --testsuite unit --testdox
+
 .PHONY: tests
 tests:
-	php bin/phpunit --testdox
-
+	composer database
+	php bin/phpunit --testsuite unit,integration --testdox
 
 install:
 	cp .env.dist .env.local
