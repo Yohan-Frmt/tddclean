@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 class RegistrationController
 {
     public function __construct(
-        private FormFactoryInterface  $factory,
-        private Environment           $twig,
+        private FormFactoryInterface $factory,
+        private Environment $twig,
         private UrlGeneratorInterface $generator,
-        private FlashBagInterface     $flashBag
+        private FlashBagInterface $flashBag
     ) {
     }
 

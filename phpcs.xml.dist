@@ -5,9 +5,7 @@
     <arg name="cache" value=".phpcs-cache"/>
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
-    <rule ref="PSR12">
-        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint"/>
-    </rule>
+    <rule ref="PSR12"/>
     <file>src/</file>
     <file>tests/</file>
 </ruleset>
