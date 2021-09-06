@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegistrationTest extends IntegrationTestCase
 {
-
-    public function testIfRegistrationIsSuccessful(): void
+    public function testShouldBeSuccessful(): void
     {
         $client = static::createClient();
         $generator = $client->getContainer()->get("router");
@@ -42,7 +41,7 @@ class RegistrationTest extends IntegrationTestCase
      * @param array<string> $plainPassword
      * @param string $error
      */
-    public function testIfRegistrationFail(
+    public function testShouldFailed(
         string $email,
         string $username,
         array $plainPassword,

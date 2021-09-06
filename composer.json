@@ -102,7 +102,6 @@
   "scripts": {
     "database": [
       "@database-dev",
-      "@database-panther",
       "@database-test"
     ],
     "database-prod": [
@@ -110,22 +109,18 @@
       "php bin/console doctrine:database:create --env=prod",
       "php bin/console doctrine:schema:update --force --env=prod"
     ],
-    "database-panther": [
-      "php bin/console doctrine:database:drop --if-exists --force --env=panther",
-      "php bin/console doctrine:database:create --env=panther",
-      "php bin/console doctrine:schema:update --force --env=panther",
-      "php bin/console doctrine:fixtures:load -n --env=panther"
-    ],
     "database-test": [
       "php bin/console doctrine:database:drop --if-exists --force --env=test",
       "php bin/console doctrine:database:create --env=test",
       "php bin/console doctrine:schema:update --force --env=test",
+      "psql -d tddclean -Upostgres -c \"CREATE EXTENSION \\\"uuid-ossp\\\";\"",
       "php bin/console doctrine:fixtures:load -n --env=test"
     ],
     "database-dev": [
       "php bin/console doctrine:database:drop --if-exists --force",
       "php bin/console doctrine:database:create",
       "php bin/console doctrine:schema:update --force",
+      "psql -d tddclean_dev -Upostgres -c \"CREATE EXTENSION \\\"uuid-ossp\\\";\"",
       "php bin/console doctrine:fixtures:load -n"
     ],
     "auto-scripts": {

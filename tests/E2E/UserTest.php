@@ -7,15 +7,15 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class UserTest extends PantherTestCase
 {
-    public function test(): void
+    public function testIfE2ERegistrationIsSuccessful(): void
     {
         $client = self::createPantherClient();
 
         $crawler = $client->request(method: Request::METHOD_GET, uri: '/register');
 
         $crawler->filter(selector: 'form')->form([
-            'registration[email]'                 => 'user@mail.com',
-            'registration[username]'              => 'username',
+            'registration[email]'                 => 'new_user@mail.com',
+            'registration[username]'              => 'new_username',
             'registration[plainPassword][first]'  => 'password',
             'registration[plainPassword][second]' => 'password',
         ]);

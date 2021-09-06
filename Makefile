@@ -31,10 +31,12 @@ database-dev:
 
 prepare-test:
 	make database-test
+	psql -d tddclean_test -Upostgres -c "CREATE EXTENSION \"uuid-ossp\";"
 	make fixtures-test
 
 prepare-dev:
 	make database-dev
+	psql -d tddclean_dev -Upostgres -c "CREATE EXTENSION \"uuid-ossp\";"
 	make fixtures-dev
 
 prepare-build:
@@ -76,7 +78,7 @@ e2e-tests:
 .PHONY: tests
 tests:
 	composer database
-	php bin/phpunit --testsuite unit,integration --testdox
+	php bin/phpunit --testsuite unit,integration,e2e --testdox
 
 install:
 	cp .env.dist .env.local
