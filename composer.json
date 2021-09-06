@@ -52,6 +52,7 @@
     "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
+    "dbrekelmans/bdi": "^0.3.0",
     "doctrine/doctrine-fixtures-bundle": "^3.4",
     "friendsoftwig/twigcs": "^5.0",
     "icanhazstring/composer-unused": "^0.7.7",
@@ -69,6 +70,7 @@
     "symfony/css-selector": "5.3.*",
     "symfony/debug-bundle": "5.3.*",
     "symfony/maker-bundle": "^1.0",
+    "symfony/panther": "^1.1",
     "symfony/phpunit-bridge": "^5.3",
     "symfony/stopwatch": "5.3.*",
     "symfony/web-profiler-bundle": "5.3.*"
@@ -83,13 +85,13 @@
   "autoload": {
     "psr-4": {
       "App\\": "src/",
-      "Domain\\": "Domain/src"
+      "Domain\\": "Domain/src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "App\\Tests\\": "tests/",
-      "Domain\\Tests\\": "Domain/tests"
+      "Domain\\Tests\\": "Domain/tests/"
     }
   },
   "replace": {
@@ -100,7 +102,6 @@
   "scripts": {
     "database": [
       "@database-dev",
-      "@database-panther",
       "@database-test"
     ],
     "database-prod": [
@@ -108,22 +109,18 @@
       "php bin/console doctrine:database:create --env=prod",
       "php bin/console doctrine:schema:update --force --env=prod"
     ],
-    "database-panther": [
-      "php bin/console doctrine:database:drop --if-exists --force --env=panther",
-      "php bin/console doctrine:database:create --env=panther",
-      "php bin/console doctrine:schema:update --force --env=panther",
-      "php bin/console doctrine:fixtures:load -n --env=panther"
-    ],
     "database-test": [
       "php bin/console doctrine:database:drop --if-exists --force --env=test",
       "php bin/console doctrine:database:create --env=test",
       "php bin/console doctrine:schema:update --force --env=test",
+      "psql -d tddclean -Upostgres -c \"CREATE EXTENSION \\\"uuid-ossp\\\";\"",
       "php bin/console doctrine:fixtures:load -n --env=test"
     ],
     "database-dev": [
       "php bin/console doctrine:database:drop --if-exists --force",
       "php bin/console doctrine:database:create",
       "php bin/console doctrine:schema:update --force",
+      "psql -d tddclean_dev -Upostgres -c \"CREATE EXTENSION \\\"uuid-ossp\\\";\"",
       "php bin/console doctrine:fixtures:load -n"
     ],
     "auto-scripts": {
