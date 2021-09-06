@@ -14,3 +14,23 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+#
+#security:
+#    enable_authenticator_manager: true
+#    password_hashers:
+#        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+#    providers:
+#        users_provider:
+#            id: App\Infrastructure\Security\Provider\UserProvider
+#    firewalls:
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#        main:
+#            lazy: true
+#            provider: users_provider
+#            pattern: ^/
+#            logout:
+#                path: logout
+#    access_control:

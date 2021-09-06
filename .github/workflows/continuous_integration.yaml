@@ -1,5 +1,5 @@
 name: Continuous Integration
-on: [push]
+on: [push, pull_request]
 jobs:
   ci:
     name: Continuous Integration
@@ -43,9 +43,11 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install
         run: BRANCH=${{ env.GITHUB_REF_SLUG }} DATABASE_USER=postgres DATABASE_PASSWORD=root make install
-      - name: Prepare env
-        run: make prepare-build
-      - name: Analyze
-        run: make analyze
-      - name: Tests
-        run: make tests
+      - name: Check PHPCS Violations
+        run: vendor/bin/phpcs --standard=PSR12 tests src Domain
+#      - name: Prepare env
+#        run: make prepare-build
+#      - name: Analyze
+#        run: make analyze
+#      - name: Tests
+#        run: make tests
