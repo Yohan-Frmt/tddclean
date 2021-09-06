@@ -35,11 +35,6 @@ class RegistrationTest extends IntegrationTestCase
 
     /**
      * @dataProvider provideFailedData
-     *
-     * @param string $email
-     * @param string $username
-     * @param array<string> $plainPassword
-     * @param string $error
      */
     public function testShouldFailed(
         string $email,
@@ -68,9 +63,6 @@ class RegistrationTest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @return Generator<array<string, array<string, string>|string>>
-     */
     public function provideFailedData(): Generator
     {
         yield [

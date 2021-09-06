@@ -1,36 +1,21 @@
 security:
+    encoder:
+        App\Infrastructure\Security\User:
+            algorithm: argon2i
     enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     providers:
-        users_in_memory: { memory: null }
+        user_provider:
+            id: App\Infrastructure\Security\Provider\UserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: user_provider
+            pattern: ^/
+#            custom_authenticators:
+#                - App\Infrastructure\Security\Authenticator\WebAuthenticator
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-
-#
-#security:
-#    enable_authenticator_manager: true
-#    password_hashers:
-#        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-#    providers:
-#        users_provider:
-#            id: App\Infrastructure\Security\Provider\UserProvider
-#    firewalls:
-#        dev:
-#            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
-#        main:
-#            lazy: true
-#            provider: users_provider
-#            pattern: ^/
-#            logout:
-#                path: logout
-#    access_control:

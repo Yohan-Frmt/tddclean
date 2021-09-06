@@ -27,8 +27,7 @@ class UserRepository extends ServiceEntityRepository implements UserGateway
 
     public function getUserByEmail(string $email): ?User
     {
-        // TODO: Implement getUserByEmail() method.
-        return null;
+        return $this->getUserByEmail($email);
     }
 
     public function register(User $user): void
