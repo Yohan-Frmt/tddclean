@@ -2,32 +2,26 @@
 
 namespace App\Infrastructure\Doctrine\Entity;
 
-use App\Infrastructure\Adapter\Repository\UserRepository;
 use DateTimeInterface;
+use Doctrine\ORM\Mapping\Id;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
-use Serializable;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Service\Attribute\Required;
+use App\Infrastructure\Adapter\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[Entity(repositoryClass: UserRepository::class)]
 #[Table(name: "`user`")]
 #[UniqueEntity(fields: ['email', 'username', 'id'])]
-class User implements Serializable
+class User
 {
-
-    public function __construct()
-    {
-        $this->id = Uuid::v4();
-    }
 
     #[Id]
     #[Required]
@@ -46,15 +40,11 @@ class User implements Serializable
     #[Column(type: Types::STRING)]
     private string $username;
 
-    #[Required]
-    #[NotBlank]
-    #[Column(type: Types::STRING)]
-    private string $firstName = '';
+    #[Column(type: Types::STRING, nullable: true)]
+    private ?string $firstName = null;
 
-    #[Required]
-    #[NotBlank]
-    #[Column(type: Types::STRING)]
-    private string $lastName = '';
+    #[Column(type: Types::STRING, nullable: true)]
+    private ?string $lastName = null;
 
     #[Column(type: Types::JSON)]
     private array $roles = [];
@@ -72,9 +62,38 @@ class User implements Serializable
     #[Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $lastLogin = null;
 
-    public function getId(): string
+    public function __construct()
     {
-        return $this->id->jsonSerialize();
+        $this->id = Uuid::v4();
+    }
+
+    public static function create(
+        string $email,
+        string $username,
+        string $password,
+        string $firstname = null,
+        string $lastname = null,
+        array $role = [],
+        string $passwordResetToken = null,
+        DateTimeInterface $passwordResetRequestedAt = null,
+        DateTimeInterface $lastLogin = null,
+    ): User {
+        $self = new self();
+        $self->setEmail($email);
+        $self->setUsername($username);
+        $self->setPassword($password);
+        $self->setFirstName($firstname);
+        $self->setLastName($lastname);
+        $self->setRoles($role);
+        $self->setPasswordResetToken($passwordResetToken);
+        $self->setPasswordResetRequestedAt($passwordResetRequestedAt);
+        $self->setLastLogin($lastLogin);
+        return $self;
+    }
+
+    public function getId(): UuidV4
+    {
+        return $this->id;
     }
 
     public function getRoles(): array
@@ -109,6 +128,28 @@ class User implements Serializable
     public function setUsername(string $username): self
     {
         $this->username = $username;
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
         return $this;
     }
 
@@ -154,33 +195,5 @@ class User implements Serializable
     {
         $this->lastLogin = $lastLogin;
         return $this;
-    }
-
-    public function serialize(): ?string
-    {
-        return serialize([
-            $this->id,
-            $this->email,
-            $this->username,
-            $this->password,
-            $this->roles,
-            $this->passwordResetToken,
-            $this->passwordResetRequestedAt,
-            $this->lastLogin,
-        ]);
-    }
-
-    public function unserialize($data)
-    {
-        list(
-            $this->id,
-            $this->email,
-            $this->username,
-            $this->password,
-            $this->roles,
-            $this->passwordResetToken,
-            $this->passwordResetRequestedAt,
-            $this->lastLogin,
-            ) = unserialize($data, ["allowed_class" => false,]);
     }
 }

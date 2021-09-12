@@ -25,10 +25,17 @@ class UserProvider implements UserProviderInterface
         return $this->getUserByEmail($user->getUserIdentifier());
     }
 
-    public function loadUserByUsername(string $username): User
+
+    public function loadUserByIdentifier(string $identifier): User
     {
-        return $this->getUserByEmail($username);
+        return $this->getUserByEmail($identifier);
     }
+
+    public function loadUserByUsername(string $username)
+    {
+        // TODO: Implement loadUserByUsername() method.
+    }
+
 
     public function supportsClass(string $class): bool
     {

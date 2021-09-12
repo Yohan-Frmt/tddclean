@@ -22,17 +22,26 @@
             <directory>Domain/tests</directory>
         </testsuite>
         <testsuite name="integration">
-            <directory>tests/integration</directory>
+            <directory>tests/Integration</directory>
         </testsuite>
         <testsuite name="e2e">
             <directory>tests/E2E</directory>
+        </testsuite>
+        <testsuite name="system">
+            <directory>tests/System</directory>
         </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">
         <include>
+            <directory suffix=".php">Domain/src</directory>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <directory suffix=".tpl.php">src</directory>
+            <directory>src/Infrastructure/Maker</directory>
+            <file>src/Kernel.php</file>
+        </exclude>
     </coverage>
 
     <listeners>
@@ -42,4 +51,8 @@
     <extensions>
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
+    
+    <logging>
+        <testdoxText outputFile="build/coverage"/>
+    </logging>
 </phpunit>

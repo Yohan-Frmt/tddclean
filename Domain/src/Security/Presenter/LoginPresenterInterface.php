@@ -4,7 +4,7 @@ namespace Domain\Security\Presenter;
 
 use Domain\Security\Response\LoginResponse;
 
-interface LoginPresenter
+interface LoginPresenterInterface
 {
     /**
     * @param LoginResponse $response

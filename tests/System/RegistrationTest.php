@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests\Integration;
+namespace App\Tests\System;
 
-use App\Infrastructure\Test\IntegrationTestCase;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RegistrationTest extends IntegrationTestCase
+class RegistrationTest extends WebTestCase
 {
     public function testShouldBeSuccessful(): void
     {
@@ -19,8 +19,8 @@ class RegistrationTest extends IntegrationTestCase
         );
         $this->assertResponseIsSuccessful();
         $form = $crawler->filter(selector: 'form')->form([
-            'registration[email]'                 => 'new_user@mail.com',
-            'registration[username]'              => 'new_username',
+            'registration[email]'                 => 'system_new_user@mail.com',
+            'registration[username]'              => 'system_new_username',
             'registration[plainPassword][first]'  => 'password',
             'registration[plainPassword][second]' => 'password',
         ]);
@@ -70,36 +70,36 @@ class RegistrationTest extends IntegrationTestCase
             'username'      => 'username',
             'plainPassword' => [
                 'first'  => 'password',
-                'second' => 'password'
+                'second' => 'password',
             ],
-            'error'         => 'This value should not be blank.'
+            'error'         => 'This value should not be blank.',
         ];
         yield [
             'email'         => 'user@mail.com',
             'username'      => '',
             'plainPassword' => [
                 'first'  => 'password',
-                'second' => 'password'
+                'second' => 'password',
             ],
-            'error'         => 'This value should not be blank.'
+            'error'         => 'This value should not be blank.',
         ];
         yield [
             'email'         => 'user@mail.com',
             'username'      => 'username',
             'plainPassword' => [
                 'first'  => '123',
-                'second' => '123'
+                'second' => '123',
             ],
-            'error'         => 'Password is too short. It should have 8 characters or more.'
+            'error'         => 'Password is too short. It should have 8 characters or more.',
         ];
         yield [
             'email'         => 'user@mail.com',
             'username'      => 'username',
             'plainPassword' => [
                 'first'  => 'password',
-                'second' => ''
+                'second' => '',
             ],
-            'error'         => 'Confirmation does not match password!'
+            'error'         => 'Confirmation does not match password!',
         ];
     }
 }

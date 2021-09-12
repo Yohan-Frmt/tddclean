@@ -17,13 +17,13 @@ class RegistrationRequest
         return new self($email, $username, $plainPassword);
     }
 
-    public function validate(UserGateway $user_gateway)
+    public function validate(UserGateway $userGateway): void
     {
         Assert::notBlank(value: $this->email);
         Assert::email(value: $this->email);
-        Assert::uniqueEmail(email: $this->email, user_gateway: $user_gateway);
+        Assert::uniqueEmail(email: $this->email, userGateway: $userGateway);
         Assert::notBlank(value: $this->username);
-        Assert::uniqueUsername(username: $this->username, user_gateway: $user_gateway);
+        Assert::uniqueUsername(username: $this->username, userGateway: $userGateway);
         Assert::notBlank(value: $this->plainPassword);
         Assert::minLength(value: $this->plainPassword, minLength: 8);
     }

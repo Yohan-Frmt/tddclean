@@ -1,10 +1,8 @@
 security:
-    encoder:
+    password_hashers:
         App\Infrastructure\Security\User:
             algorithm: argon2i
     enable_authenticator_manager: true
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     providers:
         user_provider:
             id: App\Infrastructure\Security\Provider\UserProvider
@@ -16,6 +14,6 @@ security:
             lazy: true
             provider: user_provider
             pattern: ^/
-#            custom_authenticators:
-#                - App\Infrastructure\Security\Authenticator\WebAuthenticator
+            custom_authenticators:
+                - App\Infrastructure\Security\Authenticator\WebAuthenticator
     access_control:
