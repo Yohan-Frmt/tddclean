@@ -9,11 +9,11 @@ use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture
 {
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $user->setUsername("duplicate");
-        $user->setEmail("duplicate@mail.com");
+        $user->setUsername("username");
+        $user->setEmail("user@mail.com");
         $user->setPassword(password_hash("password", PASSWORD_ARGON2I));
         $manager->persist($user);
         $manager->flush();

@@ -11,9 +11,9 @@ class Assert extends Assertion
     public const NON_UNIQUE_EMAIL = 300;
     public const NON_UNIQUE_USERNAME = 301;
 
-    public static function uniqueEmail(string $email, UserGateway $user_gateway): void
+    public static function uniqueEmail(string $email, UserGateway $userGateway): void
     {
-        if (!$user_gateway->isEmailUnique($email)) {
+        if (!$userGateway->isEmailUnique($email)) {
             throw new NonUniqueEntry(
                 message: "Email is already used!",
                 code: self::NON_UNIQUE_EMAIL
@@ -21,9 +21,9 @@ class Assert extends Assertion
         }
     }
 
-    public static function uniqueUsername(string $username, UserGateway $user_gateway): void
+    public static function uniqueUsername(string $username, UserGateway $userGateway): void
     {
-        if (!$user_gateway->isUsernameUnique($username)) {
+        if (!$userGateway->isUsernameUnique($username)) {
             throw new NonUniqueEntry(
                 message: "Username is already used!",
                 code: self::NON_UNIQUE_USERNAME

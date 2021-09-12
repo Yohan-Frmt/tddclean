@@ -2,17 +2,24 @@
 
 namespace App\UserInterface\Controller;
 
-use Twig\Environment;
-use Domain\Security\UseCase\Registration;
+use App\Infrastructure\Security\Authenticator\WebAuthenticator;
 use App\UserInterface\Form\RegistrationType;
+use App\UserInterface\Presenter\RegistrationPresenter;
+use Couchbase\Authenticator;
+use Domain\Security\Request\RegistrationRequest;
+use Domain\Security\UseCase\Registration;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Domain\Security\Request\RegistrationRequest;
-use Symfony\Component\Form\FormFactoryInterface;
-use App\UserInterface\Presenter\RegistrationPresenter;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Twig\Environment;
 
 class RegistrationController
 {
@@ -20,25 +27,26 @@ class RegistrationController
         private FormFactoryInterface $factory,
         private Environment $twig,
         private UrlGeneratorInterface $generator,
-        private FlashBagInterface $flashBag
+        private FlashBagInterface $flashBag,
+        private UserAuthenticatorInterface $userAuthenticator,
+        private WebAuthenticator $webAuthenticator,
     ) {
     }
 
-    public function __invoke(Request $request, Registration $registration): Response
+    public function __invoke(Request $request, Registration $registration, RegistrationPresenter $presenter): Response
     {
         $form = $this->factory
             ->create(type: RegistrationType::class)
             ->handleRequest(request: $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $request = RegistrationRequest::create(
+            $registrationRequest = RegistrationRequest::create(
                 email: $form->getData()->getEmail(),
                 username: $form->getData()->getUsername(),
                 plainPassword: $form->getData()->getPlainPassword()
             );
-            $presenter = new RegistrationPresenter();
             $registration->execute(
-                request: $request,
+                request: $registrationRequest,
                 presenter: $presenter
             );
 
@@ -47,18 +55,20 @@ class RegistrationController
                 message: 'Account successfully created'
             );
 
-            return new RedirectResponse(
-                url: $this->generator->generate(
-                    name: 'home'
-                )
+            return $this->userAuthenticator->authenticateUser(
+                user: $presenter->getViewModel()->getUser(),
+                authenticator: $this->webAuthenticator,
+                request: $request
             );
         }
 
-        return new Response($this->twig->render(
-            name: 'registration.html.twig',
-            context: [
-                "form" => $form->createView(),
-            ]
-        ));
+        return new Response(
+            $this->twig->render(
+                name: 'security/registration.html.twig',
+                context: [
+                    "form" => $form->createView(),
+                ]
+            )
+        );
     }
 }

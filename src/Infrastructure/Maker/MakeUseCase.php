@@ -65,7 +65,7 @@ class MakeUseCase extends AbstractMaker
         $presenterInterfaceName = $generator->createClassNameDetails(
             name: $input->getArgument(name: 'name'),
             namespacePrefix: 'Domain\\' . $domainArg . '\\Presenter',
-            suffix: 'Presenter'
+            suffix: 'PresenterInterface'
         );
 
         $testClassName = $generator->createClassNameDetails(
