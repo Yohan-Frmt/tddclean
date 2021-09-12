@@ -9,10 +9,6 @@ else
 	BRANCH_NAME=$(TEMP_NAME)
 endif
 
-functional-tests:
-	php bin/console doctrine:fixtures:load -n --env=test
-	php bin/phpunit --testsuite functional --testdox
-
 fixtures-test:
 	php bin/console doctrine:fixtures:load -n --env=test
 
@@ -61,24 +57,21 @@ analyze:
 	vendor\bin\phpmd src/ text .phpmd.xml
 	php vendor/bin/phpstan analyse -c phpstan.neon -l 7
 
-unit-tests:
-	php bin/phpunit --testsuite unit --testdox
-
 integration-tests:
-	php bin/phpunit --testsuite unit --testdox
+	php bin/phpunit --testsuite integration --testdox
 
 system-tests:
 	composer database-test
-	php bin/phpunit --testsuite unit --testdox
+	php bin/phpunit --testsuite system --testdox
 
 e2e-tests:
 	composer database-panther
-	php bin/phpunit --testsuite unit --testdox
+	php bin/phpunit --testsuite e2e --testdox
 
 .PHONY: tests
 tests:
 	composer database
-	php bin/phpunit --testsuite unit,integration,e2e --testdox
+	php bin/phpunit  --coverage-html .\build\coverage\
 
 install:
 	cp .env.dist .env.local

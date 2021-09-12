@@ -7,6 +7,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Domain\Security\Entity\User;
 use Domain\Security\Gateway\UserGateway;
 
+use function is_null;
+
 class UserRepository extends ServiceEntityRepository implements UserGateway
 {
 
@@ -27,8 +29,20 @@ class UserRepository extends ServiceEntityRepository implements UserGateway
 
     public function getUserByEmail(string $email): ?User
     {
-        // TODO: Implement getUserByEmail() method.
-        return null;
+        $user = $this->findOneBy(['email' => $email]);
+        if (is_null($user)) {
+            return null;
+        }
+
+        return new User(
+            id: $user->getId(),
+            email: $user->getEmail(),
+            username: $user->getUsername(),
+            password: $user->getPassword(),
+            passwordResetToken: $user->getPasswordResetToken(),
+            passwordResetRequestedAt: $user->getPasswordResetRequestedAt(),
+            lastLogin: $user->getLastLogin()
+        );
     }
 
     public function register(User $user): void

@@ -1,8 +1,14 @@
-register:
+
+security_register:
   path: /register
   methods: GET|POST
   controller: App\UserInterface\Controller\RegistrationController
 
+security_login:
+  path: /login
+  methods: GET|POST
+  controller: App\UserInterface\Controller\LoginController
+  
 home:
   path: /
   methods: GET

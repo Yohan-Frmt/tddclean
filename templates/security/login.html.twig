@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="post">
+        <label for="username"></label><input type="email" name="username" id="username" required="required" placeholder="Email" />
+        <label for="password"></label><input type="password" name="password" id="password" required="required" placeholder="*******" />
+        <input type="hidden" name="csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button>Login</button>
+    </form>
+{% endblock %}
