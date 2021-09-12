@@ -22,6 +22,7 @@ class UserTest extends PantherTestCase
             'registration[plainPassword][first]'  => 'password',
             'registration[plainPassword][second]' => 'password',
         ]);
+  
         $client->executeScript(
             script: 'document.querySelector("button").click()'
         );
